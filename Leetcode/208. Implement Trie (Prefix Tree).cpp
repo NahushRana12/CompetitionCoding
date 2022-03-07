@@ -1,36 +1,8 @@
-//Leetcode 208. Implement Trie (Prefix Tree)(https://leetcode.com/problems/implement-trie-prefix-tree/)
+//Leetcode 208. Implement Trie (Prefix Tree) (https://leetcode.com/problems/implement-trie-prefix-tree/)
 
 #include <bits/stdc++.h> 
 using namespace std;
  
- 
-bool isvovel(char c){
-	
-	return (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u');
-}
-
-template <typename T>
-void readVector(vector<T> &arr, int n){
-	arr.resize(n);
-	for(int i = 0;i< n;i++){
-		T temp;
-		cin>>temp;
-		arr[i] = temp;
-	} 
-}
-template <typename T>
-void writeVector(vector<T> &arr){
-	for(auto x: arr){
-		cout<<x<<" ";
-	}
-	cout<<endl;
-}
-template <typename T>
-void swapVector(T &a1,T &a2){
-	T temp = a1;
-	a1 = a2;
-	a2 = temp;
-}
 
 
 class Trie {
@@ -92,19 +64,11 @@ public:
     }
 };
 
-
- 
-
-int main()
-{
-	
-	
-
-//  Your Trie object will be instantiated and called as such:
+int main(){
+ //Your Trie object will be instantiated and called as such:
   Trie* obj = new Trie();
   obj->insert(word);
   bool param_2 = obj->search(word);
- bool param_3 = obj->startsWith(prefix);
-
-	
+  bool param_3 = obj->startsWith(prefix);
+  return 0;
 }

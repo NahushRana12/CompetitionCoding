@@ -3,35 +3,6 @@
 #include <bits/stdc++.h> 
 using namespace std;
  
- 
-bool isvovel(char c){
-	
-	return (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u');
-}
-
-template <typename T>
-void readVector(vector<T> &arr, int n){
-	arr.resize(n);
-	for(int i = 0;i< n;i++){
-		T temp;
-		cin>>temp;
-		arr[i] = temp;
-	} 
-}
-template <typename T>
-void writeVector(vector<T> &arr){
-	for(auto x: arr){
-		cout<<x<<" ";
-	}
-	cout<<endl;
-}
-template <typename T>
-void swapVector(T &a1,T &a2){
-	T temp = a1;
-	a1 = a2;
-	a2 = temp;
-}
-
 
 class MyLinkedList {
     int val;

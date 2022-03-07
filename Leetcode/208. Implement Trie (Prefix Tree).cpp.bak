@@ -1,4 +1,4 @@
-//Leetcode Problem: 707. Design Linked List(https://leetcode.com/problems/design-linked-list/)
+//Leetcode 208. Implement Trie (Prefix Tree) (https://leetcode.com/problems/implement-trie-prefix-tree/)
 
 #include <bits/stdc++.h> 
 using namespace std;
@@ -33,151 +33,70 @@ void swapVector(T &a1,T &a2){
 }
 
 
-class MyLinkedList {
-    int val;
-    MyLinkedList* next;
-    int len{-1};
+class Trie {
+    Trie *children[26];
+        bool end;
 public:
-    /** Initialize your data structure here. */
-    MyLinkedList() {
-        val = 0;
-        next = NULL;
-    }
-    MyLinkedList(int v,MyLinkedList *ptr) {
-        val = v;
-        next = ptr;
-    }
-    
-    /** Get the value of the index-th node in the linked list. If the index is invalid, return -1. */
-    int get(int i) {
-        if(i < 0 || i > len){
-            return -1;
-        }
-        MyLinkedList * temp1  = next;
-        while(i--){
-            
-            temp1 = temp1->next;
-        }
-        return temp1->val;
-    }
-    
-    void Display(){
-        MyLinkedList * temp  = next;
-        cout<<"\nDisplay Node\t ";
-        while(temp != NULL){
-            cout<<temp->val<<" ->";
-            temp = temp->next;
-        }
-        cout<<"\tlenth = "<<len;
-        
-    }
-    
-    /** Add a node of value val before the first element of the linked list. After the insertion, the new node will be the first node of the linked list. */
-    void addAtHead(int val) {
-      //  cout<<"\nADD at Head \t";
-       
-        if(next == NULL){
-              MyLinkedList * temp  = new MyLinkedList(val,NULL);
-           // cout<<"Head NULL and Inserting val =" << val;
-            
-            next = temp;
-        }
-        else
-        {
-            MyLinkedList * temp  = new MyLinkedList(val,next);
-            next = temp;
-        //    cout<<" Node present \t ";
-            
-        }
-        len++;
-      // Display();
-    }
-    
-    /** Append a node of value val to the last element of the linked list. */
-    void addAtTail(int val) {
-          MyLinkedList * temp  = new MyLinkedList(val,NULL);
-          MyLinkedList * temp1  = next;
-       //   cout<<"\nInsert at Last\t ";
-        if(temp1 == NULL){
-             MyLinkedList * temp  = new MyLinkedList(val,NULL);
-           // cout<<"Head NULL and Inserting val =" << val;
-            
-            next = temp;
-        }
-        else{
-          while(temp1->next != NULL){
-            temp1 = temp1->next;
-          }
-          temp1->next = temp;
-        }      
-        len++;
-     //   Display();
-    }
-    
-    /** Add a node of value val before the index-th node in the linked list. If index equals to the length of linked list, the node will be appended to the end of linked list. If index is greater than the length, the node will not be inserted. */
-    void addAtIndex(int i, int val) {
-        if(i < 0 || i > len + 1){
-            return ;
-        }
-        MyLinkedList * temp1  = next,*temp2 = NULL;
-        if(i ==0 ){
-            MyLinkedList * temp3  = new MyLinkedList(val,next);
-             len++;
-     //   Display();
-            next = temp3;
-            return;
-        }
-        while(i--){
-            temp2 = temp1;
-            temp1 = temp1->next;
-            
-        }
-         MyLinkedList * temp3  = new MyLinkedList(val,NULL);
-        temp3->next = temp1;
-        temp2->next = temp3;
-        
-        len++;
-     //   Display();
-        
-    }
-    
-    /** Delete the index-th node in the linked list, if the index is valid. */
-    void deleteAtIndex(int i) {
-         cout<<i<<" "<<len;
-        if(i < 0 || i > len){
-            return ;
-        }
-      
-        MyLinkedList * temp1  = next,*temp2 = next;
-          if(i == 0){
-            next = temp1->next;
-               len--;
      
-               Display();return;
+    /** Initialize your data structure here. */
+    Trie (){
+       
+        end= false;
+        for(int i =0;i<26;i++){
+            children[i]= nullptr;
         }
-        while(i--){
-            temp2 = temp1;
-            temp1 = temp1->next;
-        
+       
+    }
+    
+    /** Inserts a word into the trie. */
+    void insert(string word) {
+        Trie *newnode = this;
+        for(int i=0;i<word.length();i++){
+            int index = word[i]-'a';
+            if(!newnode->children[index])
+                newnode->children[index] = new Trie();
+            
+            newnode = newnode->children[index];
+            
         }
-        
-        temp2->next = temp1->next;
-        len--;
+        newnode->end = true;
+    }
+    
+    /** Returns if the word is in the trie. */
+    bool search(string word) {
+        Trie *newnode = this;
+        for(int i=0;i<word.length();i++){
+            int index = word[i]-'a';
+            if(!newnode->children[index])
+                return false;
+            
+            newnode = newnode->children[index];
+            
+        }
+        return ( newnode != nullptr && newnode->end);
+    }
+    
+    /** Returns if there is any word in the trie that starts with the given prefix. */
+    bool startsWith(string prefix) {
+        Trie *newnode = this;
+        for(int i=0;i<prefix.length();i++){
+            int index = prefix[i]-'a';
+            if(!newnode->children[index])
+                return false;
+            
+            newnode = newnode->children[index];
+            
+        }
+        return (newnode!= nullptr);
         
     }
 };
 
-
-int main()
-{
-	
- // Your MyLinkedList object will be instantiated and called as such:
-	MyLinkedList* obj = new MyLinkedList();
- int param_1 = obj->get(index);
- obj->addAtHead(val);
- obj->addAtTail(val);
- obj->addAtIndex(index,val);
- obj->deleteAtIndex(index);
-	
-	
+int main(){
+ //Your Trie object will be instantiated and called as such:
+  Trie* obj = new Trie();
+  obj->insert(word);
+  bool param_2 = obj->search(word);
+  bool param_3 = obj->startsWith(prefix);
+  return 0;
 }
